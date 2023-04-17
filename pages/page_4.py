@@ -1,5 +1,5 @@
 import streamlit as st
-from func import question_four, question_five, question_six, question_eight
+from func import questions
 from main_page import df
 from config import create_bar_charts
 
@@ -16,33 +16,44 @@ dropdown = st.selectbox("Seleccionar pregunta", ["Aspectos relevantes en la impl
 
 # Actualizar el gráfico de pastel basado en la selección del dropdown
 if dropdown == "Aspectos relevantes en la implementación de IA en bibliotecas":
-    economicos, recursos_humanos, politicas_ins, politicas_pu, etico, juridico, factibilidad = question_four(df["aspectos_relevantes"])
-    values = [economicos, recursos_humanos, politicas_ins, politicas_pu, etico, juridico, factibilidad]
-    aspectos = ["Aspectos económicos", "Recursos humanos", "Políticas institucionales",
-                "Políticas públicas", "Aspectos éticos", "Aspectos jurídicos", "Factibilidad técnica"]
+    aspectos_interes = ("Aspectos económicos", "Recursos humanos", "Políticas institucionales", "Políticas públicas", "Aspectos éticos", "Jurídico", "Factibilidad")
 
-    create_bar_charts(aspectos, values, "Aspectos relevantes en la implementación de IA en bibliotecas")
+    resultados_aspectos = questions(df["aspectos_relevantes"], aspectos_interes, "Jurídico", "Factibilidad")
+
+    values = [resultados_aspectos[aspecto] for aspecto in aspectos_interes]
+
+    create_bar_charts(aspectos_interes, values, "Aspectos relevantes en la implementación de IA en bibliotecas")
+
+
 elif dropdown == "¿Qué impacto cree que generaría la implementación de IA dentro de las bibliotecas?":
-    mejoras_atención, mejora_procesos, mejora_flujos_trabajo, satisfacción_usuarios, mejora_percepción_de_usuarios, redistribución_trabajos = question_five(df["impacto_IA"])
-    values = [mejoras_atención, mejora_procesos, mejora_flujos_trabajo, satisfacción_usuarios, mejora_percepción_de_usuarios, redistribución_trabajos]
-    aspectos = ["Mejoras en atención", "Mejora en procesos internos", "Mejora en flujos de trabajo",
-                "Satisfacción de usuarios", "Mejora en percepción de usuarios", "Redistribución del trabajo"]
-    
-    create_bar_charts(aspectos, values, "¿Qué impacto cree que generaría la implementación de IA dentro de las bibliotecas?")
-elif dropdown == "¿Qué nuevas tecnologías basadas en IA ha implementado o <br> considera implementar en su biblioteca?":
-    servicios_de_descubrimiento, robotica, chatbots, autoprestamos_autoservicio, catalogacion_automatizada, sistemas_de_recomendación, servicios_descarte = question_six(df["nuevas_tecnologias"])
-    values = [servicios_de_descubrimiento, robotica, chatbots, autoprestamos_autoservicio, catalogacion_automatizada, sistemas_de_recomendación, servicios_descarte]
-    aspectos = ["Servicios de descubrimiento", "Robótica", "Servicios de ayuda vía chat",
-                "Autopréstamos/autoservicio", "Catalogación/clasificación automatizada",
-                "Sistemas de recomendación", "Servicios de descarte"]
-    
-    create_bar_charts(aspectos, values, "¿Qué nuevas tecnologías basadas en IA ha implementado o <br> considera implementar en su biblioteca?")
-elif dropdown == "¿Ha adoptado o adoptaría alguna de las siguientes tecnologías en su biblioteca?":
-    ia, reconocimiento_de_voz, realidad_aumentada, mineria_datos, autoprestamo, gamificacion, chatbots, otro = question_eight(df["adopcion_de_tecnologia"])
-    values = [ia, reconocimiento_de_voz, realidad_aumentada, mineria_datos, autoprestamo, gamificacion, chatbots, otro]
-    aspectos = ["IA / ML.", "Reconocimiento de voz", "Realidad aumentada", "Mineria de datos", "Autoprestamo", "Gamificacion", "Chatbots", "Otro"]
+    aspectos_interes = ("Mejoras en la atención al usuario.", "Mejora de procesos internos de las bibliotecas.", "Mejoras en los flujos de trabajo.", "Satisfacción de los usuarios en los servicios.", "Mejora de percepción de los usuarios.", "Redistribución de trabajos.")
 
-    create_bar_charts(aspectos, values, "¿Ha adoptado o adoptaría alguna de las siguientes tecnologías <br> en su biblioteca?")
+    resultados_impacto_IA = questions(df["impacto_IA"], aspectos_interes, "Mejora de percepción de los usuarios.", "Redistribución de trabajos.")
+
+    values = [resultados_impacto_IA[aspecto] for aspecto in aspectos_interes]
+        
+    create_bar_charts(aspectos_interes, values, "¿Qué impacto cree que generaría la implementación de IA <br> dentro de las bibliotecas?")
+
+
+elif dropdown == "¿Qué nuevas tecnologías basadas en IA ha implementado o considera implementar en su biblioteca?":
+    aspectos_interes = ("Servicios de descubrimiento con asistentes inteligentes", "Robótica", "Servicios de ayuda al estudiante vía chat. (chatbots)", "Autopréstamos/autoservicio", "Catalogación/clasificación automatizada","Sistemas de recomendación", "Servicios de descarte")
+
+    resultados_nuevas_tecnologias = questions(df["nuevas_tecnologias"], aspectos_interes, "Servicios de descarte")
+
+    values = [resultados_nuevas_tecnologias[aspecto] for aspecto in aspectos_interes]
+    
+    create_bar_charts(aspectos_interes, values, "¿Qué nuevas tecnologías basadas en IA ha implementado o <br> considera implementar en su biblioteca?")
+
+
+    
+elif dropdown == "¿Ha adoptado o adoptaría alguna de las siguientes tecnologías en su biblioteca?":
+    aspectos_interes = ("Inteligencia Artificial / Aprendizaje automático.", "Reconocimiento de voz.", "Aplicaciones de realidad aumentada.", "Minería de Datos", "Auto-Préstamos de material bibliográfico.", "Gamificación de la experiencia bibliotecaria.", "Chatbots", "Otros avances tecnológicos.")
+
+    resultados_adopcion = questions(df["adopcion_de_tecnologia"] , aspectos_interes)
+
+    values = [resultados_adopcion[aspecto] for aspecto in aspectos_interes]
+
+    create_bar_charts(aspectos_interes, values, "¿Ha adoptado o adoptaría alguna de las siguientes tecnologías <br> en su biblioteca?")
 
 
 

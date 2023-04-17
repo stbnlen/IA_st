@@ -1,6 +1,7 @@
 import math
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.subplots as sp
 import plotly.graph_objects as go
@@ -35,24 +36,55 @@ new_names: Dict[str, str] = {
 }
 
 def freedman_diaconis_bindwidth(x: pd.Series) -> float:
-            """Find optimal bandwidth using Freedman-Diaconis rule."""
-            IQR = x.quantile(0.75) - x.quantile(0.25)
-            N = x.size
-            return 2 * IQR / N ** (1 / 3)
+    """
+    Calculate the optimal bandwidth using the Freedman-Diaconis rule.
+
+    Parameters:
+    x (pandas.Series): The input data.
+
+    Returns:
+    float: The optimal bindwidth.
+
+    Raises:
+    TypeError: If the input is not a pandas Series object.
+    """
+    if not isinstance(x, pd.Series):
+        raise TypeError("Input must be a pandas Series object.")
+    IQR: float = np.subtract(*np.percentile(x, [75, 25]))
+    N: int = len(x)
+    k: float = 1 / 3
+    return 2 * IQR / np.power(N, k)
 
 
-def nbins(x: pd.Series, nb: float) -> float:
-            return math.ceil((x.max() - x.min()) / nb)
+def nbins(x: pd.Series, bin_size: float = 1.0) -> int:
+    """Calculate the number of bins for a given pandas Series and bin size.
+
+    Args:
+        x: A pandas Series.
+        bin_size: The size of each bin.
+
+    Returns:
+        The number of bins.
+    """
+    try:
+        x = pd.Series(x)
+        bin_size = float(bin_size)
+    except (TypeError, ValueError):
+        raise TypeError("x must be a pandas Series and bin_size must be a float")
+    range_x = np.ptp(x)
+    return int(math.ceil(range_x / bin_size))
 
 
-def library_distribution(df: pd.DataFrame, nbins):
+def library_distribution(df: pd.DataFrame, num_bins: int) -> None:
     # Crear los subplots con 1 fila y 2 columnas
     fig = sp.make_subplots(rows=1, cols=2)
 
     # Crear el gráfico de violín en el primer subplot con transparencia (opacidad) de 0.7
+    FILL_COLOR = '#636EFA'
+    
     fig.add_trace(
         go.Violin(x=df['nro_bibliotecas'], box_visible=True, line_color='black', points='all', 
-                  fillcolor='#636EFA', opacity=0.7),
+                  fillcolor=FILL_COLOR, opacity=0.7),
         row=1, col=1
     )
 
@@ -62,7 +94,7 @@ def library_distribution(df: pd.DataFrame, nbins):
 
     # Crear el gráfico de histograma en el segundo subplot
     fig.add_trace(
-        go.Histogram(x=df['nro_bibliotecas'], nbinsx=nbins, text=df['nro_bibliotecas'], 
+        go.Histogram(x=df['nro_bibliotecas'], nbinsx=num_bins, text=df['nro_bibliotecas'], 
                      marker_color='rgba(99, 110, 250, 0.7)', opacity=0.7),
         row=1, col=2
     )
@@ -76,29 +108,37 @@ def library_distribution(df: pd.DataFrame, nbins):
                       marker_line_width=1.5, opacity=0.9, row=1, col=2)
 
     # Configurar el diseño de la figura y mostrarla
+    CHART_WIDTH = 870
+    CHART_HEIGHT = 400
+
     fig.update_layout(
         title="Distribución de Número de Bibliotecas",
         showlegend=False,
-        width=870,
-        height=400
+        width=CHART_WIDTH,
+        height=CHART_HEIGHT
     )
 
     st.plotly_chart(fig)
 
 
-def create_pie_chart(df, column, title):
+def create_pie_chart(df: pd.DataFrame, column: str, title: str) -> None:
     # Obtener los conteos de "Si" y "No"
-    yes = df[column].value_counts()[0]
-    no = df[column].value_counts()[1]
+    counts = df[column].value_counts()
+    yes = counts[0]
+    no = counts[1]
 
     # Crear la figura del gráfico de pastel
     fig = px.pie(df[column], values=[yes, no], names=["Si", "No"], title=title)
 
     # Configurar el título del gráfico
+    TITLE_SIZE = 24
+    FIG_WIDTH = 870
+    FIG_HEIGHT = 400
+
     fig.update_layout(
-        title_font=dict(size=24),
-        width=870,
-        height=400
+        title_font=dict(size=TITLE_SIZE),
+        width=FIG_WIDTH,
+        height=FIG_HEIGHT
     )
 
     # Configurar el color de línea del marcador
