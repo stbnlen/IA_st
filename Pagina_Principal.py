@@ -3,8 +3,10 @@ import streamlit as st
 from typing import List, Dict
 from utils.column_names import new_names
 
+# st.set_page_config(page_title="Encuesta sobre IA")
+
 st.markdown(
-    "# Encuesta sobre Inteligencia Artificial en Bibliotecas Universitarias de Chile 🎈"
+    "# Encuesta sobre Inteligencia Artificial en Bibliotecas Universitarias de Chile 📖"
 )
 st.markdown(
     """La investigación evalúa la implementación de servicios que contengan inteligencia artificial en las bibliotecas universitarias de Chile.
@@ -22,7 +24,7 @@ st.markdown(
 )
 
 
-st.sidebar.markdown("# Pagina Principal 🎈")
+st.sidebar.markdown("# Pagina Principal 📖")
 st.sidebar.markdown("## Introduccion")
 
 # Cargar el archivo CSV
