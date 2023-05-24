@@ -1,3 +1,4 @@
+import streamlit as st
 from stop_words import get_stop_words
 import stylecloud
 from PIL import Image
@@ -7,6 +8,7 @@ def get_all_answers(df, column):
     return "".join(df[column][i] for i, j in enumerate(df[column]))
 
 
+@st.cache_resource
 def make_cloud(answers, name):
     with open(f"clouds/{name}.txt", "w", encoding="utf-8") as f:
         f.write(answers)

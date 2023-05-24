@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iast-container
+    command: streamlit run Pagina_Principal.py --server.enableCORS false
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/code
