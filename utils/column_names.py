@@ -26,3 +26,9 @@ new_names: Dict[str, str] = {
     "Considerando lo anterior ¿ante los constantes y acelerados avances en la tecnología y los modelos de IA, piensa que es posible capacitar al equipo de la biblioteca en sus usos?": "posible_capacitacion",
     "¿Considera usted que sistemas automatizados o máquinas inteligentes pueden reemplazar a los equipos de biblioteca?": "posibilidad_reemplazo",
 }
+
+
+new_names_final_questions: Dict[str, str] = {
+    "¿Según su percepción que desventajas o aspectos desfavorables podría traer a su biblioteca las nuevas tecnologías de IA?": "pregunta_uno",
+    " ¿Qué reflexión tiene acerca de las bibliotecas con respecto a la Inteligencia Artificial y su proyección futura? Considerando aspectos tales como, usuarios, tecnologías en uso, políticas públicas, tecnologías de IA, recursos económicos, servicios brindados, bibliotecarios. ": "pregunta_dos",
+}
