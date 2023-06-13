@@ -3,8 +3,10 @@ import pandas as pd
 from utils.column_names import new_names_final_questions
 from utils.all_answers import get_all_answers, make_cloud
 
-st.markdown("Preguntas Abiertas")
-st.sidebar.markdown("# Page 7 🥧")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+st.markdown("# Preguntas Abiertas")
 
 file_path: str = "encuesta.csv"
 df_question = pd.read_csv(file_path)

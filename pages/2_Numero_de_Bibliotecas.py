@@ -4,10 +4,10 @@ from graphs.histogram_chart import library_distribution
 from utils.number_of_bins import get_number_of_bins
 from utils.freedman_diaconis import freedman_diaconis_bandwidth
 
-# st.set_page_config(page_title="Numero de Bibliotecas")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.markdown("# Numero de Bibliotecas 📉")
-st.sidebar.markdown("# Pagina 2 📉")
 
 # Crear dos botones en Streamlit y organizarlos en una misma fila
 col1, col2 = st.columns(2)

@@ -3,11 +3,10 @@ from Pagina_Principal import df
 from utils.question import questions
 from graphs.bar_charts import create_bar_charts
 
-# st.set_page_config(page_title="Tecnologias IA")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.markdown("# Tecnologias IA en Biblioteca 📊")
-st.sidebar.markdown("# Page 4 📊")
-
 
 # Crear un dropdown
 dropdown = st.selectbox(

@@ -2,11 +2,10 @@ import streamlit as st
 from graphs.pie_charts import create_pie_chart
 from Pagina_Principal import df
 
-# st.set_page_config(page_title="IA en Bibliotecas")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.markdown("# IA en Bibliotecas 🥧")
-st.sidebar.markdown("# Pagina 3 🥧")
-
 
 # Crear un dropdown
 dropdown = st.selectbox(

@@ -5,6 +5,9 @@ from utils.column_names import new_names
 
 st.set_page_config(page_title="Encuesta sobre IA")
 
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 st.markdown(
     "# Encuesta sobre Inteligencia Artificial en Bibliotecas Universitarias de Chile 📖"
 )
@@ -23,9 +26,6 @@ st.markdown(
 """
 )
 
-
-st.sidebar.markdown("# Pagina Principal 📖")
-st.sidebar.markdown("## Introduccion")
 
 # Cargar el archivo CSV
 file_path: str = "encuesta.csv"

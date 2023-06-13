@@ -2,10 +2,10 @@ import streamlit as st
 from Pagina_Principal import df
 from graphs.histogram_chart import create_histogram_subplots
 
-# st.set_page_config(page_title="Impacto IA")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.markdown("# Impacto IA en Bibliotecas 📉")
-st.sidebar.markdown("# Page 5 📉")
 
 col1, col2 = st.columns(2)
 mostrar_original = col1.button("Mostrar gráfico Nro1")

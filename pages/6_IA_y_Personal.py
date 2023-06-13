@@ -6,11 +6,10 @@ from graphs.pie_charts import (
     create_pie_chart_three,
 )
 
-# st.set_page_config(page_title="IA y Personal")
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 st.markdown("# IA y personal de biblioteca 🥧")
-st.sidebar.markdown("# Page 3 🥧")
-
 
 # Crear un dropdown
 dropdown = st.selectbox(
